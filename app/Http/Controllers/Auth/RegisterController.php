@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\UserProfile;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
@@ -78,6 +79,11 @@ class RegisterController extends Controller
         $user_profile->birthday = '1990-01-01';
         $user->userProfile()->save($user_profile);
 
+        return $user;
+    }
+
+    protected function registered(Request $request, $user)
+    {
         return $user;
     }
 }
