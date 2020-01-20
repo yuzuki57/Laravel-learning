@@ -75,9 +75,10 @@ class RegisterController extends Controller
         ]);
         //ここにユーザープロフィールの保存
         $user_profile = new UserProfile();
+        $user_profile->user_id = $user->id;
         $user_profile->introduction = "こんにちは！{$user->name}です！";
         $user_profile->birthday = '1990-01-01';
-        $user->userProfile()->save($user_profile);
+        $user_profile->save();
 
         return $user;
     }
