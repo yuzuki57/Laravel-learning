@@ -20,21 +20,23 @@ class TweetController extends Controller
     /**全件取得のメソッド。主にこれまでのツイートを全表示するために使う 。
      * foreachで全件表示
     */
-    public function index(){
-        //$tweets = Tweet::all();
-        $tweets = Tweet::paginate(10);
+    public function index()
+    {
+        $tweets = Tweet::orderBy('created_at', 'desc')->paginate(10);
         return view('tweet.index', [
             'tweets' => $tweets,
         ]);
     }
     /**新規投稿ページへ画面遷移する為のメソッド。ただそれだけ */
-    public function create(){
+    public function create()
+    {
         return view('tweet.create');
     }
     /**入力されたデータをデーターベースへ保存し、直前のページへリダイレクトする新規投稿メソッド
      * セッションデータとフラッシュデータも保持
      */
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $this->validate($request, [
             'body'=>['required', 'string', 'max:255'],
             'hash_tags'=>['string', 'max:255']
@@ -67,7 +69,8 @@ class TweetController extends Controller
         return redirect('/tweets');
     }
     /** 指定されたIDの一行文のレコードを取得し、詳細ページにアクセス*/
-    public function show($id){
+    public function show($id)
+    {
         $tweet = Tweet::find($id);
 
         //詳細表示する為のページへアクセス
@@ -76,7 +79,8 @@ class TweetController extends Controller
         ]);
     }
     /**指定されたidのレコードを編集するためのページへ遷移 */
-    public function edit($id){
+    public function edit($id)
+    {
         $tweet = Tweet::find($id);
 
         //編集ページへアクセス
@@ -85,7 +89,8 @@ class TweetController extends Controller
         ]);
     }
     /**入力されたデータをデータベースへ保存し、直前のページへリダイレクトという点でstoreとほぼ同じ */
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $tweet = Tweet::find($id);
         //入力された文字列をプロパティに代入
         $tweet->body = $request->input('body');
@@ -112,14 +117,16 @@ class TweetController extends Controller
         return redirect('/tweets');
     }
     /**指定したレコード1件を削除するメソッド。削除後にトップ画面にリダイレクト */
-    public function destroy($id){
+    public function destroy($id)
+    {
         $tweet = Tweet::find($id);
         $tweet->delete();
 
         return redirect('/tweets');
     }
 
-    public function showByHashTag($id){
+    public function showByHashTag($id)
+    {
         $hash_tag = HashTag::find($id);
 
         return view('tweet.index', [
