@@ -14,7 +14,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 Route::get('auth/register', 'Auth\RegisterController@showRegistrationForm')->name('auth.getRegister');
@@ -26,10 +26,10 @@ Route::get('/auth/logout', 'Auth\LoginController@logout')->name('auth.getLogout'
 
 
 Route::resource('/tweets', 'TweetController');
-Route::group(['middleware' => 'auth'], function(){
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/user/{id}/profile', 'UserProfileController@show')->name('user_profile.show');
     Route::get('/user/{id}/profile/edit', 'UserProfileController@edit')->name('user_profile.edit');
-    Route::match(['put', 'patch'],'/user/{user}/profile', 'UserProfileController@update')->name('user_profile.update');
+    Route::match(['put', 'patch'], '/user/{user}/profile', 'UserProfileController@update')->name('user_profile.update');
 });
 
 Route::get('hash_tags/{id}/tweets', 'TweetController@showByHashTag')->name('hash_tags.tweets');
