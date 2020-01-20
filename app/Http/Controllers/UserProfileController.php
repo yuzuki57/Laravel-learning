@@ -8,7 +8,9 @@ use App\User;
 
 class UserProfileController extends Controller
 {
-    public function show($id){
+    public function show($id)
+    {
+        //Log::debug($id);
         $user = User::find($id);
 
         return view('user_profile.show', [
@@ -38,7 +40,8 @@ class UserProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         //エラーチェック
         $this->validate($request, [
             'introduction' => ['string', 'max:255'],
@@ -74,5 +77,4 @@ class UserProfileController extends Controller
         return redirect()
             ->route('tweets.index');
     }
-
 }
