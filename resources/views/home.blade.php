@@ -1,18 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>簡易掲示板(β版)</title>
-	<meta charset="utf-8">
-</head>
-<body>
-こんにちは！
-@if(Auth::check())
-	{{ \Auth::user()->name }}さん<br/>
-	<a href="{{ route('auth.getLogout') }}">ログアウト</a>
-@else
-	ゲストさん<br/>
-	<a href="{{ route('auth.getLogin') }}">ログイン</a>
-	<a href="{{ route('auth.getRegister') }}">会員登録</a>
+@extends('layouts.default')
+
+@section('page-title')
+ホーム
+@endsection
+
+@section('content')
+@if(count($errors) > 0)
+<div class="alert alert-danger">
+	<ul>
+		@foreach($errors->all() as $error)
+		<li>{{ $error }}</li>
+		@endforeach
+	</ul>
+</div>
 @endif
-</body>
-</html>
+<div>
+	ようこそ！
+</div>
+@endsection
